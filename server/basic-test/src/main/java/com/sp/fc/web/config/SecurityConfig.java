@@ -41,12 +41,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //일반적으로 다 공개를 하고자 한다면...
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests((requests) ->
-                requests.antMatchers("/").permitAll() //홈페이지 같은 경우 모든 사람에게 접근을 허용
-                        .anyRequest().authenticated()
-                ); //authorize할 때 Request에서 어떤 request든 다 authenticated(인증) 받은 상태에서 접근해라
-        http.formLogin();
-        http.httpBasic();
+    protected void configure(HttpSecurity http) throws Exception { //어떤 필터를 끼워 넣어 필터 체인을 어떻게 구성할 것인지 설정
+//        http.authorizeRequests((requests) ->
+//                requests.antMatchers("/").permitAll() //홈페이지 같은 경우 모든 사람에게 접근을 허용
+//                        .anyRequest().authenticated()
+//                ); //authorize할 때 Request에서 어떤 request든 다 authenticated(인증) 받은 상태에서 접근해라
+//        http.formLogin();
+//        http.httpBasic();
+
+        //관련된 일부 필터를 사용안하기
+//        http
+//                .headers().disable()
+//                .csrf().disable()
+//                .logout().disable()
+//                .requestCache().disable()
+//                ;
+
+        //어떤 Request에 대해서 어떤 필터 체인이 동작하게 할 것인지?
+        //http.antMatcher("/**") //모든 request
+        //http.antMatcher("/api/**") //특정 api에 대한 request
+
+        //두개 이상의 필터 체인을 구성하고 싶다면?
+        //Security 필터 페일을 하나를 더 만들되 어떤 순서로 그 request를 처리해줄 것인지 필터 체인의 순서가 중요함으로 반드시 @Order를 선언하여 낮은 것부터 설정해야 한다.
     }
 }
