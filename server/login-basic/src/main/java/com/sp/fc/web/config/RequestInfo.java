@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class RequestInfo {
+
+    private LocalDateTime loginTime;
     private String remoteIp;
     private String sessionId;
-    private LocalDateTime loginTime;
-
 }

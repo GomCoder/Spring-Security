@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/basic-test/Spring-Security.server-basic-test.main.iml" filepath="$PROJECT_DIR$/.idea/modules/server/basic-test/Spring-Security.server-basic-test.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/basic-test/Spring-Security.server-basic-test.test.iml" filepath="$PROJECT_DIR$/.idea/modules/server/basic-test/Spring-Security.server-basic-test.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/login-basic/Spring-Security.server-login-basic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/server/login-basic/Spring-Security.server-login-basic.main.iml" />
     </modules>
   </component>
 </project>
