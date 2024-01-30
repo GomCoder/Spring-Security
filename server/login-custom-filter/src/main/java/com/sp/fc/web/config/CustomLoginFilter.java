@@ -1,13 +1,8 @@
 package com.sp.fc.web.config;
 
-/**
- * 커스텀 로그인 필터
- */
-
 import com.sp.fc.web.student.StudentAuthenticationToken;
 import com.sp.fc.web.teacher.TeacherAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -17,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    public CustomLoginFilter(AuthenticationManager authenticationManager) {
+    public CustomLoginFilter(AuthenticationManager authenticationManager){
         super(authenticationManager);
     }
 
@@ -29,18 +24,18 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String password = obtainPassword(request);
         password = (password != null) ? password : "";
         String type = request.getParameter("type");
-        //type에 따라 토큰을 달리 적용할 수 있음
-        if(type == null || !type.equals("teacher")) {
-            //student
+        if(type == null || !type.equals("teacher")){
+            // student
             StudentAuthenticationToken token = StudentAuthenticationToken.builder()
                     .credentials(username).build();
             return this.getAuthenticationManager().authenticate(token);
-        } else {
-            //teacher
-            TeacherAuthenticationToken token= TeacherAuthenticationToken.builder()
-                    .credentials(username)
-                    .build();
+        }else{
+            // teacher
+            TeacherAuthenticationToken token = TeacherAuthenticationToken.builder()
+                    .credentials(username).build();
             return this.getAuthenticationManager().authenticate(token);
         }
     }
+
+
 }

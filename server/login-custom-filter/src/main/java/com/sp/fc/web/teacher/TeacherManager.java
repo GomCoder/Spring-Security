@@ -19,6 +19,7 @@ import java.util.Set;
 @Component
 public class TeacherManager implements AuthenticationProvider, InitializingBean {
 
+    TeacherAuthenticationToken teacherAuthenticationToken;
     /**
      * 본래 DB를 통해서 가져와야 하지만 테스트이기 때문에 HashMap으로 구현함
      */
@@ -35,12 +36,12 @@ public class TeacherManager implements AuthenticationProvider, InitializingBean 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         TeacherAuthenticationToken token = (TeacherAuthenticationToken) authentication;
         if (teacherDB.containsKey(token.getCredentials())) { //token.getName()이 StudentDB에 있는 아이디와 같다면
-            Teacher teacher = teacherDB.get(token.getCredentials()); //Student를 가져옴
+            Teacher teacher = teacherDB.get(token.getCredentials()); //Teacher를 가져옴
             return TeacherAuthenticationToken.builder() //토큰을 StudentAuthenticationToken으로 만들어서 전달해줌
                     .principal(teacher)
                     .details(teacher.getUsername())
                     .authenticated(true)
-                    .authorities(teacher.getRole())
+                    //.authorities(teacher.getRole())
                     .build();
         }
         return null; //없다면 내가 처리할 수 없는 authentication은 null로 넘김

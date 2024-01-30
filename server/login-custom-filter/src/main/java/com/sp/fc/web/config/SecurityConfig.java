@@ -15,7 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final StudentManager studentManager; //이 Student Manager가 Provider가 됨
+
+    private final StudentManager studentManager;
     private final TeacherManager teacherManager;
 
     public SecurityConfig(StudentManager studentManager, TeacherManager teacherManager) {
@@ -23,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.teacherManager = teacherManager;
     }
 
-    //Student Authentication Provider를 Authentication Manager에 등록
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(studentManager);
@@ -36,17 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(request->
                         request.antMatchers("/", "/login").permitAll()
-                                .anyRequest().authenticated()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(
-                        login -> login.loginPage("/login") //StudentManager가 동작할 수 있도록 로그인 페이지 URL 설정
-                                .permitAll()
-                                .defaultSuccessUrl("/", false)
-                                .failureUrl("/login-error")
+                        login->login.loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/", false)
+                        .failureUrl("/login-error")
                 )
-                .addFilterAt(filter, UsernamePasswordAuthenticationFilter.class) //커스텀 로그인 필터를 추가하는 부분
+                .addFilterAt(filter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout->logout.logoutSuccessUrl("/"))
-                .exceptionHandling(e -> e.accessDeniedPage("/access-denied"))
+                .exceptionHandling(e->e.accessDeniedPage("/access-denied"))
                 ;
     }
 
